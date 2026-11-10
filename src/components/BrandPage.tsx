@@ -2,6 +2,7 @@ import { Theme } from '@astryxdesign/core/theme';
 import { neutralTheme } from '@astryxdesign/theme-neutral/built';
 import { Button } from '@astryxdesign/core/Button';
 import { Badge } from '@astryxdesign/core/Badge';
+import { channels } from '../data/channels';
 import '../styles/brand.css';
 
 export type Product = {
@@ -11,7 +12,17 @@ export type Product = {
   kind: string;
   platforms: string[];
   url?: string;
+  logo?: string;
+  image?: string;
+  screenshots?: string[];
+  video?: string;
 };
+
+const reels = [
+  { src: '/media/video/shoku-reel.mp4', poster: '/media/video/shoku-reel-poster.jpg', label: 'Shoku' },
+  { src: '/media/video/gta.mp4', poster: '/media/video/gta-poster.jpg', label: 'SeteFootball' },
+  { src: '/media/video/artcraft.mp4', poster: '/media/video/artcraft-poster.jpg', label: 'Reel engine' },
+];
 
 const statusLabel: Record<string, string> = {
   live: 'Live',
@@ -159,13 +170,28 @@ export default function BrandPage({ products }: { products: Product[] }) {
                 style={{ transitionDelay: `${i * 80}ms` }}
               >
                 <div className="shot">
-                  <div className="glow" />
-                  <span className="word">{p.name}</span>
+                  {p.image ? (
+                    <div className="device">
+                      <img src={p.image} alt={`${p.name} app`} loading="lazy" />
+                    </div>
+                  ) : (
+                    <>
+                      <div className="glow" />
+                      {p.logo ? (
+                        <img className="shot-logo" src={p.logo} alt={p.name} loading="lazy" />
+                      ) : (
+                        <span className="word">{p.name}</span>
+                      )}
+                    </>
+                  )}
                   <span className="arrow">↗</span>
                 </div>
                 <div className="meta">
                   <div className="top">
-                    <h3>{p.name}</h3>
+                    <div className="title-row">
+                      {p.logo && <img className="card-logo" src={p.logo} alt="" loading="lazy" />}
+                      <h3>{p.name}</h3>
+                    </div>
                     <Badge
                       label={statusLabel[p.status] ?? p.status}
                       variant={p.status === 'live' ? 'success' : 'pink'}
@@ -191,6 +217,62 @@ export default function BrandPage({ products }: { products: Product[] }) {
                 <Badge label="Building" variant="pink" />
               </div>
             </div>
+          </div>
+        </section>
+
+        <section className="section" id="channels">
+          <div className="section-head reveal">
+            <h2>The channels</h2>
+            <span className="count">0{channels.length} accounts</span>
+          </div>
+          <p className="section-lede reveal">
+            Every one of these is written, voiced, cut and posted by the same machine.
+            No editor. No studio. No upload day.
+          </p>
+          <div className="channel-grid">
+            {channels.map((c, i) => (
+              <a
+                className="channel reveal"
+                key={c.name}
+                href={c.url}
+                target={c.url === '#' ? undefined : '_blank'}
+                rel={c.url === '#' ? undefined : 'noopener noreferrer'}
+                style={{ transitionDelay: `${i * 70}ms` }}
+              >
+                <img className="channel-logo" src={c.logo} alt={`${c.name} logo`} loading="lazy" />
+                <div className="channel-meta">
+                  <h3>{c.name}</h3>
+                  <p>{c.niche}</p>
+                  <span className="channel-handle">{c.handle}</span>
+                </div>
+              </a>
+            ))}
+          </div>
+        </section>
+
+        <section className="section" id="reels">
+          <div className="section-head reveal">
+            <h2>In motion</h2>
+            <span className="count">Made by the machine</span>
+          </div>
+          <p className="section-lede reveal">
+            Real output. Vertical, captioned, voiced, and shipped on schedule.
+          </p>
+          <div className="reel-grid">
+            {reels.map((r, i) => (
+              <figure className="reel reveal" key={r.src} style={{ transitionDelay: `${i * 80}ms` }}>
+                <video
+                  src={r.src}
+                  poster={r.poster}
+                  muted
+                  loop
+                  playsInline
+                  preload="none"
+                  className="reel-video"
+                />
+                <figcaption>{r.label}</figcaption>
+              </figure>
+            ))}
           </div>
         </section>
 
