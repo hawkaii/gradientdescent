@@ -34,41 +34,7 @@ const reels = [
 
 const marqueeWords = ['Software', 'AI', 'Media', 'Audience', 'Automation', 'Distribution', 'Products'];
 
-const rules = [
-  {
-    n: '01',
-    t: 'One obsession, one product',
-    d: 'No platforms. No ten-tools-in-one. We take a single thing people do for love and finish it.',
-  },
-  {
-    n: '02',
-    t: 'Built whole',
-    d: 'Software, content and audience ship together. A product without distribution is a demo.',
-  },
-  {
-    n: '03',
-    t: 'Built to run itself',
-    d: 'If a product needs a full-time operator, it is not finished. It is a job with extra steps.',
-  },
-  {
-    n: '04',
-    t: 'Small on purpose',
-    d: 'A few products, finished. Not a catalogue of maybes.',
-  },
-  {
-    n: '05',
-    t: 'Own the customer',
-    d: 'No marketplace rent. People arrive at our door, not through someone else’s algorithm.',
-  },
-  {
-    n: '06',
-    t: 'Ship, then improve',
-    d: 'Every release is a step downhill. The badges tell the truth either way.',
-  },
-];
-
 export default function BrandPage({ products }: { products: Product[] }) {
-  const live = products.filter((p) => p.status === 'live').length;
   const total = products.length;
 
   return (
@@ -86,7 +52,6 @@ export default function BrandPage({ products }: { products: Product[] }) {
           <div className="nav-links">
             <a href="#reels">Work</a>
             <a href="#products">Products</a>
-            <a href="#approach">Approach</a>
             <Button label="Say hello" variant="primary" size="sm" href="mailto:hello@gradientdescent.wiki" className="nav-cta" />
           </div>
         </nav>
@@ -143,7 +108,6 @@ export default function BrandPage({ products }: { products: Product[] }) {
           <div className="cast-inner">
             <div className="cast-side cast-sete">
               <img className="sete-char" src="/media/sete-idle.webp" alt="Sete, the football character" loading="lazy" />
-              <span className="ball" aria-hidden="true">⚽</span>
             </div>
 
             <div className="cast-copy">
@@ -201,23 +165,6 @@ export default function BrandPage({ products }: { products: Product[] }) {
           </div>
         </section>
 
-        <section className="section">
-          <div className="stats reveal">
-            <div className="stat">
-              <div className="n">∞</div>
-              <div className="l">Ceiling</div>
-            </div>
-            <div className="stat">
-              <div className="n"><span data-count={live}>{live}</span></div>
-              <div className="l">Products live</div>
-            </div>
-            <div className="stat">
-              <div className="n"><span data-count={total}>{total}</span></div>
-              <div className="l">In the lineup</div>
-            </div>
-          </div>
-        </section>
-
         <section className="section" id="products">
           <div className="section-head reveal">
             <h2>The lineup</h2>
@@ -251,24 +198,6 @@ export default function BrandPage({ products }: { products: Product[] }) {
                   ))}
                 </span>
               </a>
-            ))}
-          </div>
-        </section>
-
-        <section className="section" id="approach">
-          <div className="section-head reveal">
-            <h2>How we work</h2>
-            <span className="count">Six rules</span>
-          </div>
-          <div className="rules">
-            {rules.map((r) => (
-              <div className="rule reveal" key={r.n}>
-                <div className="num">{r.n}</div>
-                <div>
-                  <h3>{r.t}</h3>
-                  <p>{r.d}</p>
-                </div>
-              </div>
             ))}
           </div>
         </section>
