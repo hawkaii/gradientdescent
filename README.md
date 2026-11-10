@@ -20,10 +20,25 @@ Hero line rise, rotating seal, drifting orbs, infinite marquee, scroll reveals,
 count-up stats, card lift and glow, film grain. All of it degrades to a static
 page under `prefers-reduced-motion` and without JavaScript.
 
-## Products
+## Products and media
 
 Products live in `src/content/products/*.md`. Adding a product is one file plus
 one screenshot. The lineup grid, stats and badges read from that folder.
+
+Optional frontmatter: `logo`, `image`, `screenshots[]`, `video`.
+
+Channels live in `src/data/channels.ts`.
+
+Media lives in `public/media/`:
+
+| Path | Contents |
+|---|---|
+| `media/shoku/` | app icon and three real screenshots |
+| `media/channels/` | SeteFootball, Ki Khobor, Guddu logos |
+| `media/video/` | three compressed vertical reels plus posters |
+
+Videos are 720px wide, CRF 30–31, no audio, `+faststart`. They play only while
+in view (IntersectionObserver) and never under `prefers-reduced-motion`.
 
 ## Dev
 
