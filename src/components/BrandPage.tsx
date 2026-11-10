@@ -18,9 +18,9 @@ export type Product = {
 
 // Images that sit inside the hero, fanned like prints on a desk.
 const heroPrints = [
-  { src: '/media/shoku/cookbook.jpg', label: 'Shoku cookbook', rot: -7, contain: false },
-  { src: '/media/video/gta-poster.jpg', label: 'SeteFootball reel', rot: 4, contain: false },
-  { src: '/media/obia/logo.svg', label: 'Obia', rot: 11, contain: true },
+  { src: '/media/channels/kikhobor.png', label: 'Ki Khobor', rot: -8, fit: 'cover', tone: 'plain' },
+  { src: '/media/channels/setefootball.png', label: 'SeteFootball', rot: 3, fit: 'cover', tone: 'plain' },
+  { src: '/media/obia/logo.svg', label: 'Obia', rot: 10, fit: 'contain', tone: 'dark' },
 ];
 
 // The scroll-driven stack. Order matters: index 0 is revealed first.
@@ -113,7 +113,7 @@ export default function BrandPage({ products }: { products: Product[] }) {
             <div className="hero-stack" aria-label="Our work">
               {heroPrints.map((p, i) => (
                 <figure
-                  className={`print${p.contain ? ' contain' : ''}`}
+                  className={`print print-${p.fit} tone-${p.tone}`}
                   key={p.src}
                   style={{ ['--rot' as string]: `${p.rot}deg`, zIndex: i }}
                 >
