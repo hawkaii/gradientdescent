@@ -1,0 +1,60 @@
+---
+// Temporary font lab — not linked from the site.
+const candidates = [
+  { name: 'Caveat Brush', family: "'Caveat Brush', cursive", note: 'brush-marker hand, bold, reads big', weight: 400, size: 'clamp(38px, 6vw, 96px)', tracking: '-0.01em' },
+  { name: 'Permanent Marker', family: "'Permanent Marker', cursive", note: 'thick marker, loud', weight: 400, size: 'clamp(30px, 4.6vw, 70px)', tracking: '0em' },
+  { name: 'Rock Salt', family: "'Rock Salt', cursive", note: 'scratchy pen, rough', weight: 400, size: 'clamp(24px, 3.4vw, 50px)', tracking: '0em' },
+  { name: 'Shadows Into Light', family: "'Shadows Into Light', cursive", note: 'thin pen, light and quick', weight: 400, size: 'clamp(38px, 5.8vw, 90px)', tracking: '0em' },
+  { name: 'Kalam', family: "'Kalam', cursive", note: 'indian handwriting, warm', weight: 700, size: 'clamp(38px, 5.6vw, 84px)', tracking: '-0.01em' },
+];
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Font lab</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Kalam:wght@400;700&family=Permanent+Marker&family=Rock+Salt&family=Shadows+Into+Light&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root { --pink: #ff3d9a; --ink: #1b0a14; --cream: #fff6fa; --muted: #3f1a28; }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body {
+        background: var(--pink);
+        color: var(--ink);
+        font-family: 'Inter', system-ui, sans-serif;
+        padding: 56px clamp(20px, 4vw, 56px) 80px;
+      }
+      .row {
+        max-width: 1200px;
+        margin: 0 auto 64px;
+        border-top: 1px solid rgba(27, 10, 20, 0.18);
+        padding-top: 22px;
+      }
+      .meta { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 18px; }
+      .name { font-size: 12px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; }
+      .note { font-size: 12px; color: var(--muted); }
+      h2 { line-height: 1; }
+      h2 em { font-style: italic; }
+      .sub { margin-top: 16px; max-width: 46ch; font-size: 15px; line-height: 1.55; color: var(--muted); }
+    </style>
+  </head>
+  <body>
+    {candidates.map((c) => (
+      <section class="row">
+        <div class="meta">
+          <span class="name">{c.name}</span>
+          <span class="note">{c.note}</span>
+        </div>
+        <h2 style={`font-family:${c.family};font-weight:${c.weight};font-size:${c.size};letter-spacing:${c.tracking};`}>
+          Every hobby<br />is a company<br /><em>waiting</em> to happen.
+        </h2>
+        <p class="sub">We build the software, the audience, and the machine that runs them. One obsession at a time.</p>
+      </section>
+    ))}
+  </body>
+</html>

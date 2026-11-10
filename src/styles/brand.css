@@ -1014,3 +1014,37 @@ body {
   .marquee-track { animation: none; }
   .orb { animation: none; }
 }
+
+/* =====================================================================
+   BRANCH: test/font-lab
+   Bricolage Grotesque replaces the display serif.
+   ===================================================================== */
+:root {
+  --serif: 'Caveat Brush', 'Comic Sans MS', cursive;
+  --display: 'Caveat Brush', 'Comic Sans MS', cursive;
+}
+
+/* Caveat Brush is a brush hand: it wants size, open leading, no tracking tricks */
+.hero h1,
+.section-head h2,
+.manifesto blockquote,
+.contact h2,
+.cast-copy p,
+.reel-caption,
+.story-name {
+  font-weight: 400;
+  letter-spacing: 0;
+}
+.hero h1 {
+  font-size: clamp(52px, 8.4vw, 138px);
+  line-height: 0.94;
+  max-width: 12ch;
+}
+.hero h1 em { font-style: normal; }
+.section-head h2 { font-size: clamp(32px, 4.4vw, 58px); }
+.manifesto blockquote { font-size: clamp(32px, 5.2vw, 72px); line-height: 1.0; }
+.contact h2 { font-size: clamp(44px, 7.4vw, 104px); line-height: 0.94; }
+.cast-copy p { font-size: clamp(22px, 2.8vw, 36px); line-height: 1.05; }
+.reel-caption { font-size: clamp(20px, 2.4vw, 30px); }
+.story-name { font-size: 30px; }
+.marquee span { font-weight: 400; letter-spacing: 0; }
