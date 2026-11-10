@@ -622,6 +622,111 @@ body {
   opacity: 0.75;
 }
 
+/* ---------- the cast: characters in transition ---------- */
+.cast {
+  position: relative;
+  z-index: 1;
+  padding: clamp(16px, 2.4vh, 34px) clamp(20px, 4vw, 56px);
+}
+.cast-inner {
+  max-width: 1120px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(16px, 4vw, 48px);
+}
+.cast-side { position: relative; flex: none; }
+.cast-sete { padding-right: clamp(24px, 5vw, 72px); }
+.sete-char {
+  width: clamp(116px, 15vw, 196px);
+  height: auto;
+  display: block;
+  animation: seteBob 3.4s ease-in-out infinite;
+  filter: drop-shadow(0 22px 26px rgba(27, 10, 20, 0.32));
+}
+@keyframes seteBob {
+  0%, 100% { translate: 0 0; rotate: -1.5deg; }
+  50% { translate: 0 -8px; rotate: 1.5deg; }
+}
+.ball {
+  position: absolute;
+  right: clamp(0px, 2vw, 26px);
+  bottom: 18%;
+  font-size: clamp(20px, 2.6vw, 34px);
+  line-height: 1;
+  animation: ballPlay 2.6s cubic-bezier(.35, 0, .4, 1) infinite;
+  filter: drop-shadow(0 8px 10px rgba(27, 10, 20, 0.3));
+}
+@keyframes ballPlay {
+  0%   { transform: translate(0, 0) rotate(0deg); }
+  30%  { transform: translate(34%, -58%) rotate(160deg); }
+  55%  { transform: translate(78%, -6%) rotate(280deg); }
+  75%  { transform: translate(40%, -22%) rotate(340deg); }
+  100% { transform: translate(0, 0) rotate(360deg); }
+}
+.cast-copy {
+  text-align: center;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.cast-kicker {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.cast-copy p {
+  font-family: var(--serif);
+  font-size: clamp(20px, 2.6vw, 32px);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin: 0;
+}
+.cast-ki { padding-left: clamp(24px, 5vw, 72px); }
+.ki-wrap {
+  display: block;
+  width: clamp(96px, 12vw, 152px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 5px solid var(--cream);
+  box-shadow: 0 22px 40px -18px rgba(27, 10, 20, 0.55);
+  transform-origin: 50% 90%;
+  animation: namasteBow 4.6s ease-in-out infinite;
+}
+.ki-wrap img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 34%; transform: scale(1.28); display: block; }
+.namaste {
+  position: absolute;
+  left: 50%;
+  bottom: -14px;
+  transform: translateX(-50%);
+  font-size: clamp(18px, 2vw, 26px);
+  line-height: 1;
+  animation: namasteHands 4.6s ease-in-out infinite;
+  filter: drop-shadow(0 6px 8px rgba(27, 10, 20, 0.3));
+}
+@keyframes namasteBow {
+  0%, 38%, 100% { rotate: 0deg; translate: 0 0; }
+  52% { rotate: 7deg; translate: 0 6px; }
+  66% { rotate: 0deg; translate: 0 0; }
+}
+@keyframes namasteHands {
+  0%, 40%, 100% { transform: translateX(-50%) scale(0.7); opacity: 0; }
+  56% { transform: translateX(-50%) scale(1); opacity: 1; }
+  72% { transform: translateX(-50%) scale(1); opacity: 1; }
+}
+@media (max-width: 720px) {
+  .cast-copy p { font-size: 18px; }
+  .cast-inner { gap: 10px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sete-char, .ball, .ki-wrap, .namaste { animation: none; }
+}
+
 /* ---------- scroll-driven reel stack (Ideogram-style) ---------- */
 .reel-pin {
   position: relative;

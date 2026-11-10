@@ -25,9 +25,11 @@ const heroPrints = [
 
 // The scroll-driven stack. Order matters: index 0 is revealed first.
 const reels = [
-  { src: '/media/video/shoku-reel.mp4', poster: '/media/video/shoku-reel-poster.jpg', label: 'Shoku — a recipe journal that keeps itself.', rot: -2.4, dx: -14 },
-  { src: '/media/video/gta.mp4', poster: '/media/video/gta-poster.jpg', label: 'SeteFootball — a channel that publishes itself.', rot: 2.1, dx: 12 },
-  { src: '/media/video/artcraft.mp4', poster: '/media/video/artcraft-poster.jpg', label: 'The same worker. A different obsession.', rot: -1.6, dx: -8 },
+  { src: '/media/video/sete-ucl.mp4', poster: '/media/video/sete-ucl-poster.jpg', label: 'SeteFootball — the Champions League reaction.', rot: -2.4, dx: -14 },
+  { src: '/media/video/sete-news.mp4', poster: '/media/video/sete-news-poster.jpg', label: 'SeteFootball — the weekly news drop.', rot: 2.1, dx: 12 },
+  { src: '/media/video/gta.mp4', poster: '/media/video/gta-poster.jpg', label: 'SeteFootball — a leak, a chase, a reel.', rot: -1.6, dx: -8 },
+  { src: '/media/video/shoku-reel.mp4', poster: '/media/video/shoku-reel-poster.jpg', label: 'Shoku — a recipe journal that keeps itself.', rot: 1.8, dx: 10 },
+  { src: '/media/video/artcraft.mp4', poster: '/media/video/artcraft-poster.jpg', label: 'The same worker. A different obsession.', rot: -2.2, dx: -12 },
 ];
 
 const marqueeWords = ['Software', 'AI', 'Media', 'Audience', 'Automation', 'Distribution', 'Products'];
@@ -135,6 +137,28 @@ export default function BrandPage({ products }: { products: Product[] }) {
             ))}
           </div>
         </div>
+
+        {/* The cast: two characters, one playing, one greeting */}
+        <section className="cast" aria-label="The cast">
+          <div className="cast-inner">
+            <div className="cast-side cast-sete">
+              <img className="sete-char" src="/media/sete-idle.webp" alt="Sete, the football character" loading="lazy" />
+              <span className="ball" aria-hidden="true">⚽</span>
+            </div>
+
+            <div className="cast-copy">
+              <span className="cast-kicker">The cast</span>
+              <p>Two characters.<br />One machine.</p>
+            </div>
+
+            <div className="cast-side cast-ki">
+              <span className="ki-wrap">
+                <img src="/media/channels/kikhobor.png" alt="Ki Khobor character" loading="lazy" />
+              </span>
+              <span className="namaste" aria-hidden="true">🙏</span>
+            </div>
+          </div>
+        </section>
 
         {/* Videos first: pinned card stack that reveals on scroll */}
         <section
