@@ -18,9 +18,9 @@ export type Product = {
 
 // Images that sit inside the hero, fanned like prints on a desk.
 const heroPrints = [
-  { src: '/media/channels/kikhobor.png', label: 'Ki Khobor', rot: -8, fit: 'cover', tone: 'plain' },
+  { src: '/media/shoku/icon.png', label: 'Shoku', rot: -8, fit: 'cover', tone: 'plain' },
   { src: '/media/channels/setefootball.png', label: 'SeteFootball', rot: 3, fit: 'cover', tone: 'plain' },
-  { src: '/media/obia/logo.svg', label: 'Obia', rot: 10, fit: 'contain', tone: 'dark' },
+  { src: '/media/channels/kikhobor.png', label: 'Ki Khobor', rot: 10, fit: 'cover', tone: 'plain' },
 ];
 
 // The scroll-driven stack. Order matters: index 0 is revealed first.
@@ -103,27 +103,6 @@ export default function BrandPage({ products }: { products: Product[] }) {
           </div>
         </div>
 
-        {/* The cast: two characters, one playing, one greeting */}
-        <section className="cast" aria-label="The cast">
-          <div className="cast-inner">
-            <div className="cast-side cast-sete">
-              <img className="sete-char" src="/media/sete-idle.webp" alt="Sete, the football character" loading="lazy" />
-            </div>
-
-            <div className="cast-copy">
-              <span className="cast-kicker">The cast</span>
-              <p>Two characters.<br />One machine.</p>
-            </div>
-
-            <div className="cast-side cast-ki">
-              <span className="ki-wrap">
-                <img src="/media/channels/kikhobor.png" alt="Ki Khobor character" loading="lazy" />
-              </span>
-              <span className="namaste" aria-hidden="true">🙏</span>
-            </div>
-          </div>
-        </section>
-
         {/* Videos first: pinned card stack that reveals on scroll */}
         <section
           className="reel-pin"
@@ -165,6 +144,27 @@ export default function BrandPage({ products }: { products: Product[] }) {
           </div>
         </section>
 
+        {/* The cast: two characters, one holding the ball, one greeting */}
+        <section className="cast" aria-label="The cast">
+          <div className="cast-inner">
+            <div className="cast-side cast-sete">
+              <img className="sete-char" src="/media/sete-idle.webp" alt="Sete, the football character" loading="lazy" />
+            </div>
+
+            <div className="cast-copy">
+              <span className="cast-kicker">The cast</span>
+              <p>Two characters.<br />One machine.</p>
+            </div>
+
+            <div className="cast-side cast-ki">
+              <span className="ki-wrap">
+                <img src="/media/channels/kikhobor.png" alt="Ki Khobor character" loading="lazy" />
+              </span>
+              <span className="namaste" aria-hidden="true">🙏</span>
+            </div>
+          </div>
+        </section>
+
         <section className="section" id="products">
           <div className="section-head reveal">
             <h2>The lineup</h2>
@@ -202,13 +202,57 @@ export default function BrandPage({ products }: { products: Product[] }) {
           </div>
         </section>
 
-        <section className="manifesto">
+        <section className="manifesto" id="idea">
           <div className="inner reveal">
             <div className="kicker">The whole idea</div>
             <blockquote>
               Most software waits to be used.<br />
               Ours <em>goes to work.</em>
             </blockquote>
+
+            {/* automation in one line: the loop never stops */}
+            <div className="pipe" aria-hidden="true">
+              <span className="pipe-node">Idea</span>
+              <span className="pipe-track"><i className="pipe-pulse" /></span>
+              <span className="pipe-node">Script</span>
+              <span className="pipe-track"><i className="pipe-pulse" style={{ animationDelay: '.55s' }} /></span>
+              <span className="pipe-node">Cut</span>
+              <span className="pipe-track"><i className="pipe-pulse" style={{ animationDelay: '1.1s' }} /></span>
+              <span className="pipe-node">Post</span>
+              <span className="pipe-loop">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                  <path d="M20 12a8 8 0 1 1-2.34-5.66" />
+                  <path d="M20 3v4h-4" />
+                </svg>
+              </span>
+            </div>
+
+            <div className="platforms">
+              <span className="platform">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+                  <path d="M23 12s0-3.8-.5-5.6a2.9 2.9 0 0 0-2-2C18.7 4 12 4 12 4s-6.7 0-8.5.4a2.9 2.9 0 0 0-2 2C1 8.2 1 12 1 12s0 3.8.5 5.6a2.9 2.9 0 0 0 2 2C5.3 20 12 20 12 20s6.7 0 8.5-.4a2.9 2.9 0 0 0 2-2C23 15.8 23 12 23 12ZM9.8 15.5v-7l6 3.5-6 3.5Z" />
+                </svg>
+                YouTube
+              </span>
+
+              <span className="platform">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.9" aria-hidden="true">
+                  <rect x="3" y="3" width="18" height="18" rx="5.4" />
+                  <circle cx="12" cy="12" r="4" />
+                  <circle cx="17.3" cy="6.7" r="1.15" fill="currentColor" stroke="none" />
+                </svg>
+                Instagram
+              </span>
+
+              <span className="platform">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+                  <path d="M3.6 1.9 14.8 12 3.6 22.1c-.4-.3-.6-.8-.6-1.3V3.2c0-.5.2-1 .6-1.3Z" />
+                  <path d="M16.3 10.9 19 12l-2.7 1.1-1.9-1.1 1.9-1.1Z" opacity="0.75" />
+                  <path d="M5.4 1.4 16.9 7.9l-2 2L5.4 1.4Zm0 21.2 9.5-8.5 2 2L5.4 22.6Z" opacity="0.55" />
+                </svg>
+                Play Store
+              </span>
+            </div>
           </div>
         </section>
 
