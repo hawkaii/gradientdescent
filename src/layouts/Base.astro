@@ -1,6 +1,8 @@
 ---
-import '../styles/global.css';
-const { title = 'Gradient Descent', description = 'A product for every hobby.' } = Astro.props;
+const {
+  title = 'Gradient Descent',
+  description = 'Every hobby is a company waiting to happen. We build the software, the audience, and the machine that runs them.',
+} = Astro.props as { title?: string; description?: string };
 ---
 <!doctype html>
 <html lang="en">
@@ -12,25 +14,56 @@ const { title = 'Gradient Descent', description = 'A product for every hobby.' }
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
-    <style>
-      @font-face {
-        font-family: 'Monocraft';
-        src: url('/fonts/Monocraft.ttf') format('truetype');
-        font-display: swap;
-      }
-    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
-    <div class="bg-grid"></div>
-    <div class="scanlines"></div>
     <slot />
-    <script>
-      // Scroll reveal
-      const io = new IntersectionObserver((entries) => {
-        entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add('in'); });
-      }, { threshold: 0.15 });
-      document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+    <script is:inline>
+      (function () {
+        var els = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
+        var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (!('IntersectionObserver' in window) || reduced) {
+          els.forEach(function (el) { el.classList.add('in'); });
+        } else {
+          els.forEach(function (el) { el.classList.add('pending'); });
+          var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (e) {
+              if (e.isIntersecting) {
+                e.target.classList.add('in');
+                io.unobserve(e.target);
+              }
+            });
+          }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+          els.forEach(function (el) { io.observe(el); });
+        }
+
+        var nums = Array.prototype.slice.call(document.querySelectorAll('[data-count]'));
+        if (nums.length && 'IntersectionObserver' in window && !reduced) {
+          var host = nums[0].closest('.stats') || nums[0];
+          var cio = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+              if (!entry.isIntersecting) return;
+              nums.forEach(function (el) {
+                var target = Number(el.getAttribute('data-count'));
+                if (isNaN(target)) return;
+                var start = performance.now(), dur = 1100;
+                function step(now) {
+                  var p = Math.min(1, (now - start) / dur);
+                  var eased = 1 - Math.pow(1 - p, 3);
+                  el.textContent = String(Math.round(target * eased));
+                  if (p < 1) requestAnimationFrame(step);
+                }
+                requestAnimationFrame(step);
+              });
+              cio.disconnect();
+            });
+          }, { threshold: 0.4 });
+          cio.observe(host);
+        }
+      })();
     </script>
   </body>
 </html>
