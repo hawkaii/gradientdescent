@@ -40,25 +40,56 @@ const {
           els.forEach(function (el) { io.observe(el); });
         }
 
-        // Play reels only while visible: no wasted bandwidth, no motion offscreen.
-        var vids = Array.prototype.slice.call(document.querySelectorAll('.reel-video'));
-        if (vids.length && 'IntersectionObserver' in window) {
-          var vio = new IntersectionObserver(function (entries) {
-            entries.forEach(function (entry) {
-              var v = entry.target;
-              if (entry.isIntersecting) {
-                var p = v.play();
-                if (p && p.catch) p.catch(function () {});
-              } else {
-                v.pause();
+        // Scroll-driven reel stack: each step of the pin reveals one more video.
+        var pin = document.querySelector('.reel-pin');
+        if (pin) {
+          var cards = Array.prototype.slice.call(pin.querySelectorAll('.reel-card'));
+          var vids = cards.map(function (c) { return c.querySelector('video'); }).filter(Boolean);
+          var caption = pin.querySelector('[data-reel-caption]');
+          var idxEl = pin.querySelector('[data-reel-index]');
+          var lastCount = 0;
+
+          var updateStack = function () {
+            var rect = pin.getBoundingClientRect();
+            var travel = pin.offsetHeight - window.innerHeight;
+            var progress = travel > 0 ? -rect.top / travel : 0;
+            progress = Math.max(0, Math.min(1, progress));
+
+            var count = Math.max(1, Math.min(cards.length, Math.ceil(progress * cards.length)));
+
+            if (count !== lastCount) {
+              cards.forEach(function (card, i) {
+                card.classList.toggle('is-revealed', i < count);
+                card.classList.toggle('is-behind', i < count - 1);
+              });
+
+              var top = cards[count - 1];
+              if (top) {
+                var label = top.getAttribute('data-label') || '';
+                if (caption) caption.textContent = label;
+                if (idxEl) idxEl.textContent = String(count);
               }
-            });
-          }, { threshold: 0.35 });
-          vids.forEach(function (v) {
-            v.pause();
-            v.load();
-            vio.observe(v);
-          });
+
+              vids.forEach(function (video, i) {
+                if (i === count - 1) {
+                  var pr = video.play();
+                  if (pr && pr.catch) pr.catch(function () {});
+                } else if (!video.paused) {
+                  video.pause();
+                }
+              });
+
+              lastCount = count;
+            }
+          };
+
+          updateStack();
+          window.addEventListener('scroll', updateStack, { passive: true });
+          window.addEventListener('resize', updateStack);
+
+          if (reduced) {
+            cards.forEach(function (card) { card.classList.add('is-revealed'); });
+          }
         }
 
         var nums = Array.prototype.slice.call(document.querySelectorAll('[data-count]'));

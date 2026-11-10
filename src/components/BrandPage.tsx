@@ -1,8 +1,6 @@
 import { Theme } from '@astryxdesign/core/theme';
 import { neutralTheme } from '@astryxdesign/theme-neutral/built';
 import { Button } from '@astryxdesign/core/Button';
-import { Badge } from '@astryxdesign/core/Badge';
-import { channels } from '../data/channels';
 import '../styles/brand.css';
 
 export type Product = {
@@ -18,18 +16,21 @@ export type Product = {
   video?: string;
 };
 
-const reels = [
-  { src: '/media/video/shoku-reel.mp4', poster: '/media/video/shoku-reel-poster.jpg', label: 'Shoku' },
-  { src: '/media/video/gta.mp4', poster: '/media/video/gta-poster.jpg', label: 'SeteFootball' },
-  { src: '/media/video/artcraft.mp4', poster: '/media/video/artcraft-poster.jpg', label: 'Reel engine' },
+// Images that sit inside the hero, fanned like prints on a desk.
+const heroPrints = [
+  { src: '/media/shoku/cookbook.jpg', label: 'Shoku cookbook', rot: -7, contain: false },
+  { src: '/media/video/gta-poster.jpg', label: 'SeteFootball reel', rot: 4, contain: false },
+  { src: '/media/obia/logo.svg', label: 'Obia', rot: 11, contain: true },
 ];
 
-const statusLabel: Record<string, string> = {
-  live: 'Live',
-  alpha: 'Alpha',
-  building: 'Building',
-  planned: 'Planned',
-};
+// The scroll-driven stack. Order matters: index 0 is revealed first.
+const reels = [
+  { src: '/media/video/shoku-reel.mp4', poster: '/media/video/shoku-reel-poster.jpg', label: 'Shoku — a recipe journal that keeps itself.', rot: -2.4, dx: -14 },
+  { src: '/media/video/gta.mp4', poster: '/media/video/gta-poster.jpg', label: 'SeteFootball — a channel that publishes itself.', rot: 2.1, dx: 12 },
+  { src: '/media/video/artcraft.mp4', poster: '/media/video/artcraft-poster.jpg', label: 'The same worker. A different obsession.', rot: -1.6, dx: -8 },
+];
+
+const marqueeWords = ['Software', 'AI', 'Media', 'Audience', 'Automation', 'Distribution', 'Products'];
 
 const rules = [
   {
@@ -64,8 +65,6 @@ const rules = [
   },
 ];
 
-const marqueeWords = ['Software', 'AI', 'Media', 'Audience', 'Automation', 'Distribution', 'Products'];
-
 export default function BrandPage({ products }: { products: Product[] }) {
   const live = products.filter((p) => p.status === 'live').length;
   const total = products.length;
@@ -83,43 +82,44 @@ export default function BrandPage({ products }: { products: Product[] }) {
             Gradient Descent
           </a>
           <div className="nav-links">
+            <a href="#reels">Work</a>
             <a href="#products">Products</a>
             <a href="#approach">Approach</a>
-            <a href="#contact">Contact</a>
             <Button label="Say hello" variant="primary" size="sm" href="mailto:hello@gradientdescent.wiki" className="nav-cta" />
           </div>
         </nav>
 
         <header className="hero">
-          <div className="seal" aria-hidden="true">
-            <svg viewBox="0 0 200 200" className="seal-svg">
-              <defs>
-                <path id="sealPath" d="M100,100 m-74,0 a74,74 0 1,1 148,0 a74,74 0 1,1 -148,0" />
-              </defs>
-              <text className="seal-text">
-                <textPath href="#sealPath" startOffset="0">
-                  BUILT TO RUN ITSELF · EST. 2026 ·
-                </textPath>
-              </text>
-            </svg>
-            <span className="seal-core">↓</span>
-          </div>
+          <div className="hero-grid">
+            <div className="hero-copy">
+              <div className="eyebrow">An automation studio</div>
+              <h1>
+                <span className="line"><span>Every hobby</span></span>
+                <span className="line"><span>is a company</span></span>
+                <span className="line"><span><em>waiting</em> to happen.</span></span>
+              </h1>
+              <div className="hero-body">
+                <p>
+                  We build the software, the audience, and the machine that runs them.
+                  One obsession at a time — finished, live, and improving while we sleep.
+                </p>
+                <div className="hero-cta">
+                  <Button label="Watch the work" variant="primary" size="lg" href="#reels" />
+                  <Button label="Build with us" variant="ghost" size="lg" href="#contact" />
+                </div>
+              </div>
+            </div>
 
-          <div className="eyebrow">An automation studio</div>
-          <h1>
-            <span className="line"><span>Every hobby</span></span>
-            <span className="line"><span>is a company</span></span>
-            <span className="line"><span><em>waiting</em> to happen.</span></span>
-          </h1>
-
-          <div className="hero-body">
-            <p>
-              We build the software, the audience, and the machine that runs them.
-              One obsession at a time — finished, live, and improving while we sleep.
-            </p>
-            <div className="hero-cta">
-              <Button label="See the lineup" variant="primary" size="lg" href="#products" />
-              <Button label="Build with us" variant="ghost" size="lg" href="#contact" />
+            <div className="hero-stack" aria-label="Our work">
+              {heroPrints.map((p, i) => (
+                <figure
+                  className={`print${p.contain ? ' contain' : ''}`}
+                  key={p.src}
+                  style={{ ['--rot' as string]: `${p.rot}deg`, zIndex: i }}
+                >
+                  <img src={p.src} alt={p.label} loading="eager" />
+                </figure>
+              ))}
             </div>
           </div>
         </header>
@@ -135,6 +135,47 @@ export default function BrandPage({ products }: { products: Product[] }) {
             ))}
           </div>
         </div>
+
+        {/* Videos first: pinned card stack that reveals on scroll */}
+        <section
+          className="reel-pin"
+          id="reels"
+          style={{ height: `calc(100vh + ${(reels.length - 1) * 90}vh)` }}
+        >
+          <div className="reel-stage">
+            <div className="reel-head">
+              <span className="reel-kicker">In motion</span>
+              <span className="reel-counter"><span data-reel-index>1</span> / {reels.length}</span>
+            </div>
+
+            <div className="reel-cards">
+              {reels.map((r, i) => (
+                <figure
+                  className={`reel-card${i === 0 ? ' is-revealed' : ''}`}
+                  key={r.src}
+                  data-label={r.label}
+                  style={{
+                    ['--rot' as string]: `${r.rot}deg`,
+                    ['--dx' as string]: `${r.dx}px`,
+                    zIndex: i + 1,
+                  }}
+                >
+                  <video
+                    src={r.src}
+                    poster={r.poster}
+                    muted
+                    loop
+                    playsInline
+                    preload={i === 0 ? 'auto' : 'none'}
+                    className="reel-video"
+                  />
+                </figure>
+              ))}
+            </div>
+
+            <p className="reel-caption" data-reel-caption>{reels[0].label}</p>
+          </div>
+        </section>
 
         <section className="section">
           <div className="stats reveal">
@@ -159,119 +200,33 @@ export default function BrandPage({ products }: { products: Product[] }) {
             <span className="count">0{total} products</span>
           </div>
 
-          <div className="grid-products">
+          <div className="stories">
             {products.map((p, i) => (
               <a
-                className="product reveal"
+                className="story reveal"
                 key={p.name}
                 href={p.url ?? '#contact'}
                 target={p.url ? '_blank' : undefined}
                 rel={p.url ? 'noopener noreferrer' : undefined}
-                style={{ transitionDelay: `${i * 80}ms` }}
+                style={{ transitionDelay: `${i * 90}ms` }}
               >
-                <div className="shot">
-                  {p.image ? (
-                    <div className="device">
-                      <img src={p.image} alt={`${p.name} app`} loading="lazy" />
-                    </div>
-                  ) : (
-                    <>
-                      <div className="glow" />
-                      {p.logo ? (
-                        <img className="shot-logo" src={p.logo} alt={p.name} loading="lazy" />
-                      ) : (
-                        <span className="word">{p.name}</span>
-                      )}
-                    </>
-                  )}
-                  <span className="arrow">↗</span>
-                </div>
-                <div className="meta">
-                  <div className="top">
-                    <div className="title-row">
-                      {p.logo && <img className="card-logo" src={p.logo} alt="" loading="lazy" />}
-                      <h3>{p.name}</h3>
-                    </div>
-                    <Badge
-                      label={statusLabel[p.status] ?? p.status}
-                      variant={p.status === 'live' ? 'success' : 'pink'}
-                    />
-                  </div>
-                  <p>{p.tagline}</p>
-                  <div className="tags">
-                    <span className="tag tag-status">{p.kind}</span>
-                    {p.platforms.map((pl) => (
-                      <span className="tag" key={pl}>{pl}</span>
-                    ))}
-                  </div>
-                </div>
+                <span className="story-ring">
+                  <span className="story-inner">
+                    {p.logo ? (
+                      <img src={p.logo} alt={`${p.name} logo`} loading="lazy" />
+                    ) : (
+                      <span className="story-letter">{p.name[0]}</span>
+                    )}
+                  </span>
+                </span>
+                <span className="story-name">{p.name}</span>
+                <span className="story-sub">{p.tagline}</span>
+                <span className="story-tags">
+                  {p.platforms.map((pl) => (
+                    <span className="tag" key={pl}>{pl}</span>
+                  ))}
+                </span>
               </a>
-            ))}
-
-            <div className="product ghost reveal" style={{ transitionDelay: '160ms' }}>
-              <div className="ghost-inner">
-                <div>
-                  <h3>In the workshop</h3>
-                  <p>Cooking. Sport. The next obsession — built, shipped, and given an audience.</p>
-                </div>
-                <Badge label="Building" variant="pink" />
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="section" id="channels">
-          <div className="section-head reveal">
-            <h2>The channels</h2>
-            <span className="count">0{channels.length} accounts</span>
-          </div>
-          <p className="section-lede reveal">
-            Every one of these is written, voiced, cut and posted by the same machine.
-            No editor. No studio. No upload day.
-          </p>
-          <div className="channel-grid">
-            {channels.map((c, i) => (
-              <a
-                className="channel reveal"
-                key={c.name}
-                href={c.url}
-                target={c.url === '#' ? undefined : '_blank'}
-                rel={c.url === '#' ? undefined : 'noopener noreferrer'}
-                style={{ transitionDelay: `${i * 70}ms` }}
-              >
-                <img className="channel-logo" src={c.logo} alt={`${c.name} logo`} loading="lazy" />
-                <div className="channel-meta">
-                  <h3>{c.name}</h3>
-                  <p>{c.niche}</p>
-                  <span className="channel-handle">{c.handle}</span>
-                </div>
-              </a>
-            ))}
-          </div>
-        </section>
-
-        <section className="section" id="reels">
-          <div className="section-head reveal">
-            <h2>In motion</h2>
-            <span className="count">Made by the machine</span>
-          </div>
-          <p className="section-lede reveal">
-            Real output. Vertical, captioned, voiced, and shipped on schedule.
-          </p>
-          <div className="reel-grid">
-            {reels.map((r, i) => (
-              <figure className="reel reveal" key={r.src} style={{ transitionDelay: `${i * 80}ms` }}>
-                <video
-                  src={r.src}
-                  poster={r.poster}
-                  muted
-                  loop
-                  playsInline
-                  preload="none"
-                  className="reel-video"
-                />
-                <figcaption>{r.label}</figcaption>
-              </figure>
             ))}
           </div>
         </section>
@@ -316,7 +271,7 @@ export default function BrandPage({ products }: { products: Product[] }) {
           <span className="brand"><span className="tick" /> Gradient Descent</span>
           <span className="sig">Built to run itself.</span>
           <span>
-            <a href="#products">Products</a> · <a href="#approach">Approach</a> · <a href="mailto:hello@gradientdescent.wiki">Contact</a>
+            <a href="#reels">Work</a> · <a href="#products">Products</a> · <a href="mailto:hello@gradientdescent.wiki">Contact</a>
           </span>
         </footer>
       </div>
