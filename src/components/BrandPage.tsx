@@ -46,7 +46,7 @@ export default function BrandPage({ products }: { products: Product[] }) {
 
         <nav className="nav">
           <a href="/" className="brand">
-            <span className="tick" />
+            <img className="brand-mark" src="/media/brand/gd-mark.png" alt="" />
             Gradient Descent
           </a>
           <div className="nav-links">
@@ -265,7 +265,7 @@ export default function BrandPage({ products }: { products: Product[] }) {
         </section>
 
         <footer className="footer">
-          <span className="brand"><span className="tick" /> Gradient Descent</span>
+          <span className="brand"><img className="brand-mark" src="/media/brand/gd-mark.png" alt="" /> Gradient Descent</span>
           <span className="sig">Built to run itself.</span>
           <span>
             <a href="#reels">Work</a> · <a href="#products">Products</a> · <a href="mailto:hello@gradientdescent.wiki">Contact</a>
